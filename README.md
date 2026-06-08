@@ -1,4 +1,4 @@
-# 🍽️ mmm menu — Digital Restaurant Menu
+# 🍽️ Digital Restaurant Menu
 
 <div align="center">
 

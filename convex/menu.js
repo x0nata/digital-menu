@@ -158,9 +158,9 @@ export const seedMenuData = mutation({
       return "Data already exists!";
     }
 
-    // Insert Appetizers
+    // Insert Starters
     await ctx.db.insert("menuCategories", {
-      tab: "Appetizers",
+      tab: "Starters",
       id: "starters",
       title: "Starters",
       image: "/food/Rose Tteokbokki.jpg"
@@ -176,7 +176,7 @@ export const seedMenuData = mutation({
     });
 
     await ctx.db.insert("menuCategories", {
-      tab: "Appetizers",
+      tab: "Starters",
       id: "dumplings",
       title: "Dumplings",
       image: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?q=80&w=400&auto=format&fit=crop"

@@ -36,7 +36,7 @@ export const seedSettings = mutation({
     const existing = await ctx.db.query("settings").first();
     if (existing) return "Settings already exist";
     return await ctx.db.insert("settings", {
-      tabs: ["Appetizers", "Main", "Drinks"],
+      tabs: ["Starters", "Main", "Drinks"],
       taxRate: 15,
       theme: {
         brandRed: "#E60000",

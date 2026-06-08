@@ -3,10 +3,10 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import ImageUploader from './ImageUploader';
 
-const DEFAULT_TABS = ['Appetizers', 'Main', 'Drinks'];
+const DEFAULT_TABS = ['Main', 'Drinks'];
 
 const defaultForm = {
-  tab: 'Appetizers',
+  tab: '',
   id: '',
   title: '',
   image: '',
@@ -224,6 +224,7 @@ export default function CategoriesManager() {
                   className="w-full p-4 border border-surface-variant rounded-xl bg-white focus:outline-none focus:border-brand-red transition-all"
                   required
                 >
+                  <option value="" disabled>Select a tab</option>
                   {TABS.map(tab => (
                     <option key={tab} value={tab}>{tab}</option>
                   ))}

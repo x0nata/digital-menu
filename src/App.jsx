@@ -164,7 +164,7 @@ function App() {
   });
 
   const settings = useQuery(api.settings.getSettings);
-  const tabs = settings?.tabs ?? ['Appetizers', 'Main', 'Drinks'];
+  const tabs = settings?.tabs ?? ['Starters', 'Main', 'Drinks'];
   const taxRate = settings?.taxRate ?? 15;
 
   const [activeTab, setActiveTab] = useState('All');
