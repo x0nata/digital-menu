@@ -141,6 +141,7 @@ export default function SettingsManager() {
   const settings = useQuery(api.settings.getSettings);
   const updateSettings = useMutation(api.settings.updateSettings);
   const seedSettings = useMutation(api.settings.seedSettings);
+  const migrateAppetizers = useMutation(api.menu.migrateAppetizersToStarters);
 
   const [tabs, setTabs] = useState([]);
   const [taxRate, setTaxRate] = useState(15);
@@ -151,6 +152,7 @@ export default function SettingsManager() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const [migrateMsg, setMigrateMsg] = useState("");
 
   useEffect(() => {
     if (settings) {
@@ -197,6 +199,15 @@ export default function SettingsManager() {
       }
     } catch (err) {
       setError(err.message || "Failed to seed");
+    }
+  };
+
+  const handleMigrate = async () => {
+    try {
+      const result = await migrateAppetizers();
+      setMigrateMsg(result);
+    } catch (err) {
+      setError(err.message || "Migration failed");
     }
   };
 
@@ -281,6 +292,24 @@ export default function SettingsManager() {
           Theme
         </h3>
         <ThemeEditor theme={theme} onChange={setTheme} />
+      </section>
+
+      <section className="bg-white rounded-2xl border border-surface-variant p-6 space-y-4">
+        <h3 className="font-label-bold text-sm uppercase tracking-wide text-secondary">
+          Data Migration
+        </h3>
+        <p className="text-xs text-secondary">
+          If you have existing categories with the old "Appetizers" tab, run this to rename them to "Starters".
+        </p>
+        <button
+          onClick={handleMigrate}
+          className="bg-surface-variant text-on-surface font-label-bold py-2.5 px-6 rounded-xl hover:bg-surface-dim transition-all text-sm"
+        >
+          Rename "Appetizers" → "Starters"
+        </button>
+        {migrateMsg && (
+          <p className="text-sm font-label-bold text-green-700 bg-green-100 py-2 px-4 rounded-lg">{migrateMsg}</p>
+        )}
       </section>
 
       {error && (

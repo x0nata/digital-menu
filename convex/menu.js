@@ -150,6 +150,22 @@ export const deleteCategory = mutation({
   },
 });
 
+export const migrateAppetizersToStarters = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const categories = await ctx.db
+      .query("menuCategories")
+      .filter((q) => q.eq(q.field("tab"), "Appetizers"))
+      .collect();
+
+    for (const cat of categories) {
+      await ctx.db.patch(cat._id, { tab: "Starters" });
+    }
+
+    return `Migrated ${categories.length} categories from "Appetizers" to "Starters"`;
+  },
+});
+
 export const seedMenuData = mutation({
   args: {},
   handler: async (ctx) => {
