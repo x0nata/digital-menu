@@ -214,16 +214,16 @@ export default function WaiterScanner() {
   if (mode === 'scanning') {
     return (
       <div className="min-h-[100dvh] bg-black flex flex-col">
-        <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-6">
-          <div className="w-full max-w-lg sm:max-w-xl md:max-w-2xl">
-            <div className="relative w-full aspect-square rounded-3xl overflow-hidden shadow-2xl shadow-black/50">
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <div className="w-full max-w-[100vw]">
+            <div className="relative w-full aspect-square overflow-hidden shadow-2xl shadow-black/50">
               <div id="qr-scanner" className="w-full h-full" />
               <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 left-0 w-14 h-14 border-t-[5px] border-l-[5px] border-brand-red rounded-tl-2xl" />
-                <div className="absolute top-0 right-0 w-14 h-14 border-t-[5px] border-r-[5px] border-brand-red rounded-tr-2xl" />
-                <div className="absolute bottom-0 left-0 w-14 h-14 border-b-[5px] border-l-[5px] border-brand-red rounded-bl-2xl" />
-                <div className="absolute bottom-0 right-0 w-14 h-14 border-b-[5px] border-r-[5px] border-brand-red rounded-br-2xl" />
-                <div className="absolute left-6 right-6 h-[3px] bg-gradient-to-r from-transparent via-brand-red to-transparent animate-scan rounded-full" />
+                <div className="absolute top-0 left-0 w-20 h-20 border-t-[6px] border-l-[6px] border-brand-red rounded-tl-3xl" />
+                <div className="absolute top-0 right-0 w-20 h-20 border-t-[6px] border-r-[6px] border-brand-red rounded-tr-3xl" />
+                <div className="absolute bottom-0 left-0 w-20 h-20 border-b-[6px] border-l-[6px] border-brand-red rounded-bl-3xl" />
+                <div className="absolute bottom-0 right-0 w-20 h-20 border-b-[6px] border-r-[6px] border-brand-red rounded-br-3xl" />
+                <div className="absolute left-8 right-8 h-[4px] bg-gradient-to-r from-transparent via-brand-red to-transparent animate-scan rounded-full" />
               </div>
             </div>
           </div>
