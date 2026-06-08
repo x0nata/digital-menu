@@ -78,7 +78,8 @@ export default function WaiterScanner() {
           (decodedText) => {
             const parsed = parseOrderQR(decodedText);
             if (parsed && parsed.items.length > 0) {
-              scannerRef.current?.pause();
+              try { await scannerRef.current?.stop(); } catch {}
+              scannerRef.current = null;
               setOrderData(parsed);
               setScanTime(new Date().toLocaleTimeString());
               setMode('scanned');
@@ -108,19 +109,11 @@ export default function WaiterScanner() {
     setMode('scanning');
   }, []);
 
-  const handleScanAgain = useCallback(async () => {
+  const handleScanAgain = useCallback(() => {
     setOrderData(null);
     setScanTime(null);
     setError('');
     setMode('scanning');
-    try {
-      if (scannerRef.current) {
-        await scannerRef.current.resume();
-      }
-    } catch (err) {
-      setCameraError(err.message || 'Failed to restart scanner');
-      setMode('idle');
-    }
   }, []);
 
   const handleDone = useCallback(async () => {
