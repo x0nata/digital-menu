@@ -39,7 +39,6 @@ export default function WaiterScanner() {
   const [cameraError, setCameraError] = useState('');
   const [expandedOrder, setExpandedOrder] = useState(null);
   const scannerRef = useRef(null);
-  const qrContainerRef = useRef(null);
 
   const saveOrder = useMutation(api.scannedOrders.saveOrder);
   const discardOrder = useMutation(api.scannedOrders.discardOrder);
@@ -59,7 +58,7 @@ export default function WaiterScanner() {
 
   useEffect(() => {
     if (mode !== 'scanning') return;
-    if (!qrContainerRef.current) return;
+    if (scannerRef.current) return;
 
     let cancelled = false;
 
@@ -67,30 +66,26 @@ export default function WaiterScanner() {
       setCameraError('');
       setError('');
       try {
-        if (!scannerRef.current) {
-          scannerRef.current = new Html5Qrcode(qrContainerRef.current);
-          await scannerRef.current.start(
-            { facingMode: 'environment' },
-            { fps: 15, qrbox: { width: 260, height: 260 }, aspectRatio: 1 },
-            (decodedText) => {
-              const parsed = parseOrderQR(decodedText);
-              if (parsed && parsed.items.length > 0) {
-                scannerRef.current?.pause();
-                setOrderData(parsed);
-                setScanTime(new Date().toLocaleTimeString());
-                setMode('scanned');
-                saveOrder({ orderData: parsed });
-              } else {
-                navigator.vibrate?.(100);
-                setError('Invalid order QR code');
-                setTimeout(() => setError(''), 1500);
-              }
-            },
-            () => {}
-          );
-        } else {
-          await scannerRef.current.resume();
-        }
+        scannerRef.current = new Html5Qrcode('qr-scanner');
+        await scannerRef.current.start(
+          { facingMode: 'environment' },
+          { fps: 15, qrbox: { width: 260, height: 260 }, aspectRatio: 1 },
+          (decodedText) => {
+            const parsed = parseOrderQR(decodedText);
+            if (parsed && parsed.items.length > 0) {
+              scannerRef.current?.pause();
+              setOrderData(parsed);
+              setScanTime(new Date().toLocaleTimeString());
+              setMode('scanned');
+              saveOrder({ orderData: parsed });
+            } else {
+              navigator.vibrate?.(100);
+              setError('Invalid order QR code');
+              setTimeout(() => setError(''), 1500);
+            }
+          },
+          () => {}
+        );
       } catch (err) {
         if (!cancelled) {
           setCameraError(err.message || 'Camera access denied or unavailable');
@@ -113,6 +108,14 @@ export default function WaiterScanner() {
     setScanTime(null);
     setError('');
     setMode('scanning');
+    try {
+      if (scannerRef.current) {
+        await scannerRef.current.resume();
+      }
+    } catch (err) {
+      setCameraError(err.message || 'Failed to restart scanner');
+      setMode('idle');
+    }
   }, []);
 
   const handleDone = useCallback(async () => {
@@ -209,7 +212,7 @@ export default function WaiterScanner() {
         <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-6">
           <div className="w-full max-w-md sm:max-w-lg md:max-w-xl">
             <div className="relative w-full aspect-square rounded-3xl overflow-hidden shadow-2xl shadow-black/50">
-              <div ref={qrContainerRef} className="w-full h-full" />
+              <div id="qr-scanner" className="w-full h-full" />
               <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-0 left-0 w-14 h-14 border-t-[5px] border-l-[5px] border-brand-red rounded-tl-2xl" />
                 <div className="absolute top-0 right-0 w-14 h-14 border-t-[5px] border-r-[5px] border-brand-red rounded-tr-2xl" />
