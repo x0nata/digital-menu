@@ -140,7 +140,7 @@ function CategoryItemsList({ subCategory, onBack, onAddToCart }) {
       
       {items === undefined ? (
         <div className="flex justify-center p-8">
-          <span className="material-symbols-outlined animate-spin text-brand-red text-4xl">autorenew</span>
+          <p className="text-brand-red font-label-bold text-base animate-pulse">loading...</p>
         </div>
       ) : items.length === 0 ? (
         <div className="text-center p-8 text-secondary font-label-bold">No dishes found in this category.</div>
@@ -274,7 +274,7 @@ function App() {
           <CategoryItemsList subCategory={activeSubCategory} onBack={handleBack} onAddToCart={addToCart} />
         ) : currentCategories === undefined ? (
           <div className="flex justify-center p-12">
-             <span className="material-symbols-outlined animate-spin text-brand-red text-5xl">autorenew</span>
+            <p className="text-brand-red font-label-bold text-lg animate-pulse">loading...</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 animate-in fade-in duration-300">
