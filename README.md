@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![mmm menu](https://img.shields.io/badge/mmm%20menu-Digital%20Restaurant%20Menu-red?style=for-the-badge)
+![menu](https://img.shields.io/badge/mmm%20menu-Digital%20Restaurant%20Menu-red?style=for-the-badge)
 
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![Convex](https://img.shields.io/badge/Convex-Backend-EC4E20?style=for-the-badge)](https://convex.dev/)
