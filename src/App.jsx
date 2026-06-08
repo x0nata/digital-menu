@@ -340,7 +340,7 @@ function App() {
                     />
                   </div>
                   <p className="text-brand-red text-center mb-6 font-label-bold px-4 text-sm uppercase">
-                    Scan at the counter to order
+                    waiter will scan your order
                   </p>
                   
                   <div className="w-full bg-white dark:bg-zinc-900 rounded-xl border border-surface-variant dark:border-zinc-800 shadow-sm overflow-hidden transition-colors duration-300">
