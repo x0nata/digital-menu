@@ -75,7 +75,7 @@ export default function WaiterScanner() {
             aspectRatio: 1,
             experimentalFeatures: { useBarCodeDetectorIfSupported: true },
           },
-          (decodedText) => {
+          async (decodedText) => {
             const parsed = parseOrderQR(decodedText);
             if (parsed && parsed.items.length > 0) {
               try { await scannerRef.current?.stop(); } catch {}
