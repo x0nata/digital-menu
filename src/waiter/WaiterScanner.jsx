@@ -69,7 +69,12 @@ export default function WaiterScanner() {
         scannerRef.current = new Html5Qrcode('qr-scanner');
         await scannerRef.current.start(
           { facingMode: 'environment' },
-          { fps: 15, qrbox: { width: 260, height: 260 }, aspectRatio: 1 },
+          {
+            fps: 30,
+            qrbox: (vw, vh) => ({ width: Math.floor(vw * 0.85), height: Math.floor(vh * 0.85) }),
+            aspectRatio: 1,
+            experimentalFeatures: { useBarCodeDetectorIfSupported: true },
+          },
           (decodedText) => {
             const parsed = parseOrderQR(decodedText);
             if (parsed && parsed.items.length > 0) {
@@ -210,7 +215,7 @@ export default function WaiterScanner() {
     return (
       <div className="min-h-[100dvh] bg-black flex flex-col">
         <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-6">
-          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl">
+          <div className="w-full max-w-lg sm:max-w-xl md:max-w-2xl">
             <div className="relative w-full aspect-square rounded-3xl overflow-hidden shadow-2xl shadow-black/50">
               <div id="qr-scanner" className="w-full h-full" />
               <div className="absolute inset-0 pointer-events-none">
